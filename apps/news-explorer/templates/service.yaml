@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "news-explorer.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "news-explorer.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "news-explorer.selectorLabels" . | nindent 4 }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8080

@@ -1,0 +1,28 @@
+image:
+  repository: ghcr.io/khainouski/news-explorer
+  # Placeholder default — never left as "latest" for a real deployment. The Argo CD Application
+  # (argocd/applications/news-explorer.yaml, once set up) overrides this with an actual
+  # sha-<commit> from GHCR; until then, pass --set image.tag=sha-<commit> to helm directly.
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1 # single small dev droplet — bump per-environment once that changes
+
+resources:
+  requests: # guaranteed
+    cpu: 100m
+    memory: 16Mi
+  limits: # ceiling
+    cpu: 200m
+    memory: 32Mi
+
+service:
+  port: 8080
+
+ingress:
+  enabled: true
+  # Empty matches any Host header — fine while this is the only app behind the Ingress
+  # controller. Set explicitly (e.g. "goskills.xyz") once more Ingresses share the same
+  # Traefik instance and could otherwise collide.
+  host: ""
+  path: /

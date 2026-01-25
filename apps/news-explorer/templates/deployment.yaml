@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "news-explorer.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "news-explorer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      {{- include "news-explorer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "news-explorer.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: news-explorer
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          livenessProbe: # is the pod alive
+            httpGet:
+              path: /live
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 15
+          readinessProbe: # is the pod ready for traffic
+            httpGet:
+              path: /ready
+              port: 8080
+            periodSeconds: 15
