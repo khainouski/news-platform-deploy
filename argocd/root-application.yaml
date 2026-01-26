@@ -1,0 +1,30 @@
+# App of apps: the only Application applied by hand. It watches argocd/applications/ and lets
+# Argo CD itself create/prune every Application manifest committed there — adding a new service
+# or platform component later means committing one file here, not running kubectl by hand again.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: root
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/khainouski/news-platform-deploy.git
+    targetRevision: main
+    path: argocd/applications
+    directory:
+      recurse: true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
