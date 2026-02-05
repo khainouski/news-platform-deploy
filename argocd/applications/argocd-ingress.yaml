@@ -1,0 +1,26 @@
+# Deploys the Ingress in platform/argocd/ so argocd.goskills.xyz reaches argocd-server.
+# Destination is the argocd namespace itself, alongside Argo CD's own (non-GitOps-managed)
+# install — this Application is the only piece of that install we track in git.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/khainouski/news-platform-deploy.git
+    targetRevision: main
+    path: platform/argocd
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
