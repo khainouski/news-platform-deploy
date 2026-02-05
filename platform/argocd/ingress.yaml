@@ -1,9 +1,3 @@
-# Argo CD UI exposed publicly, deliberately breaking the "not publicly exposed" default from
-# ARCHITECTURE.md — a conscious call for this pet project, not a v1 default. Only the built-in
-# Argo CD login (admin + password, see `argocd-initial-admin-secret`) protects it — no HTTPS yet
-# (cert-manager is Phase 7), same as news-explorer today. Consider adding basic auth or an
-# IP allowlist at the Ingress level, or a real TLS cert once cert-manager exists, given this is
-# more sensitive than the app itself.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
