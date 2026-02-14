@@ -1,0 +1,32 @@
+tempo:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+  metricsGenerator:
+    enabled: true
+    remoteWriteUrl: "http://prometheus-server.monitoring.svc.cluster.local:9090/api/v1/write"
+    processor:
+      local_blocks:
+        filter_server_spans: false
+        flush_to_storage: true
+    storage:
+      # PVC (persistence below) mounts at /var/tempo - keep the WAL there too, not the chart's
+      # default /tmp/tempo, so it survives pod restarts.
+      path: /var/tempo/generator/wal
+    traces_storage:
+      path: /var/tempo/generator/traces
+  overrides:
+    defaults:
+      metrics_generator:
+        processors:
+          - service-graphs
+          - span-metrics
+          - local-blocks
+        generate_native_histograms: both
+
+persistence:
+  enabled: true
+  size: 5Gi

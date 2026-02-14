@@ -1,0 +1,25 @@
+server:
+  extraArgs:
+    web.enable-remote-write-receiver: null
+    enable-feature: exemplar-storage
+  persistentVolume:
+    size: 10Gi
+  retention: "15d"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+alertmanager:
+  enabled: false
+
+prometheus-pushgateway:
+  enabled: false
+
+kube-state-metrics:
+  enabled: true
+
+prometheus-node-exporter:
+  enabled: true

@@ -16,6 +16,11 @@ resources:
     cpu: 200m
     memory: 32Mi
 
+otel:
+  # Tempo's OTLP/gRPC receiver (platform/monitoring/tempo-values.yaml). Empty disables tracing
+  # (app falls back to a no-op tracer) - harmless if Tempo isn't deployed yet, safe to leave on.
+  endpoint: "tempo.monitoring.svc.cluster.local:4317"
+
 service:
   port: 8080
 

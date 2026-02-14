@@ -1,0 +1,63 @@
+ingress:
+  enabled: true
+  hosts:
+    - grafana.goskills.xyz
+  path: /
+
+env:
+  GF_FEATURE_TOGGLES_ENABLE: "traceqlEditor traceQLStreaming metricsSummary"
+  # Sidecar drops provisioned dashboards in /tmp/dashboards (sidecar.dashboards.folder default),
+  # not /var/lib/grafana/dashboards like the docker-compose bind mount.
+  GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /tmp/dashboards/http-red.json
+
+persistence:
+  enabled: true
+  size: 2Gi
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 256Mi
+
+sidecar:
+  dashboards:
+    enabled: true
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        uid: prometheus
+        access: proxy
+        url: http://prometheus-server.monitoring.svc.cluster.local:9090
+        isDefault: true
+
+      - name: Loki
+        type: loki
+        uid: loki
+        access: proxy
+        url: http://loki-gateway.monitoring.svc.cluster.local
+        jsonData:
+          derivedFields:
+            - name: Tempo
+              datasourceUid: tempo
+              matcherRegex: '"trace_id":"(\w+)"'
+              url: '$${__value.raw}'
+              urlDisplayLabel: 'View Trace'
+
+      - name: Tempo
+        type: tempo
+        uid: tempo
+        access: proxy
+        url: http://tempo.monitoring.svc.cluster.local:3200
+        jsonData:
+          tracesToLogsV2:
+            datasourceUid: 'loki'
+            customQuery: true
+            query: '{namespace="apps"} | json | trace_id="$${__trace.traceId}"'
+            spanStartTimeShift: '-5m'
+            spanEndTimeShift: '5m'

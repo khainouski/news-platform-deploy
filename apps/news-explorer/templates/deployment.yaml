@@ -15,6 +15,12 @@ spec:
     metadata:
       labels:
         {{- include "news-explorer.selectorLabels" . | nindent 8 }}
+      annotations:
+        # Picked up by the bare prometheus-community/prometheus chart's default kubernetes-pods
+        # scrape job (annotation-based discovery, no ServiceMonitor CRD/operator needed).
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: news-explorer
@@ -22,6 +28,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8080
+          env:
+            - name: OTEL_ENDPOINT
+              value: {{ .Values.otel.endpoint | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe: # is the pod alive
