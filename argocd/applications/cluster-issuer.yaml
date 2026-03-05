@@ -1,0 +1,29 @@
+# Separate Application from cert-manager itself - ClusterIssuer needs cert-manager's CRDs to
+# exist first. Argo CD retries on its own (selfHeal) until the CRD lands, but keeping this as its
+# own Application (rather than bundled into cert-manager's sync) keeps that ordering visible
+# instead of hiding a transient failure inside one Application's status.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: cluster-issuer
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/khainouski/news-platform-deploy.git
+    targetRevision: main
+    path: platform/cert-manager/cluster-issuer
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

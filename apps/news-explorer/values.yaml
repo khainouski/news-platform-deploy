@@ -31,3 +31,7 @@ ingress:
   # Traefik instance and could otherwise collide.
   host: ""
   path: /
+  tls:
+    # Requires ingress.host to be set (cert-manager needs a concrete hostname) - safe default off.
+    enabled: false
+    issuer: letsencrypt-prod

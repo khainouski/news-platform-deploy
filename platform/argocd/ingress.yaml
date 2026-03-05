@@ -3,7 +3,14 @@ kind: Ingress
 metadata:
   name: argocd-server
   namespace: argocd
+  annotations:
+    # Start on staging until verified (see plan.md), then flip to letsencrypt-prod.
+    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
+  tls:
+    - hosts:
+        - argocd.goskills.xyz
+      secretName: argocd-server-tls
   rules:
     - host: argocd.goskills.xyz
       http:

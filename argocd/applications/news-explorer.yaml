@@ -18,6 +18,11 @@ spec:
           tag: "sha-40fd049"
         ingress:
           host: goskills.xyz
+          tls:
+            enabled: true
+            # Verify with staging first (untrusted cert, no rate-limit risk), then switch to
+            # letsencrypt-prod once `kubectl describe certificate` confirms Ready=True.
+            issuer: letsencrypt-staging
 
   destination:
     server: https://kubernetes.default.svc

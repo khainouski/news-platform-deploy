@@ -3,6 +3,13 @@ ingress:
   hosts:
     - grafana.goskills.xyz
   path: /
+  annotations:
+    # Start on staging until verified (see plan.md), then flip to letsencrypt-prod.
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  tls:
+    - secretName: grafana-tls
+      hosts:
+        - grafana.goskills.xyz
 
 env:
   GF_FEATURE_TOGGLES_ENABLE: "traceqlEditor traceQLStreaming metricsSummary"
