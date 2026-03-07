@@ -20,9 +20,8 @@ spec:
           host: goskills.xyz
           tls:
             enabled: true
-            # Verify with staging first (untrusted cert, no rate-limit risk), then switch to
-            # letsencrypt-prod once `kubectl describe certificate` confirms Ready=True.
-            issuer: letsencrypt-staging
+            # Verified working on letsencrypt-staging first (see plan.md), now on prod.
+            issuer: letsencrypt-prod
 
   destination:
     server: https://kubernetes.default.svc

@@ -4,8 +4,8 @@ ingress:
     - grafana.goskills.xyz
   path: /
   annotations:
-    # Start on staging until verified (see plan.md), then flip to letsencrypt-prod.
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    # Verified working on letsencrypt-staging first (see plan.md), now on prod.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   tls:
     - secretName: grafana-tls
       hosts:

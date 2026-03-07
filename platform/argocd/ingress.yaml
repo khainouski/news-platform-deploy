@@ -4,8 +4,8 @@ metadata:
   name: argocd-server
   namespace: argocd
   annotations:
-    # Start on staging until verified (see plan.md), then flip to letsencrypt-prod.
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    # Verified working on letsencrypt-staging first (see plan.md), now on prod.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   tls:
     - hosts:
