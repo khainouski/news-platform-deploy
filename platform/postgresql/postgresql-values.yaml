@@ -1,0 +1,26 @@
+# Bitnami stopped publishing versioned tags on the free tier of bitnami/postgresql (only
+# "latest" + digests remain; the versioned bitnamilegacy/postgresql mirror is frozen on an older
+# major and gets no security patches). Pinning by digest is the only way left to get a fixed,
+# reproducible image instead of a floating "latest" - bump this manually every so often to pick
+# up patches, same tradeoff as any unpinned base image.
+image:
+  digest: "sha256:03a2fc05c3b71a6fcc2e49c3f55f79767ca3bf32e6aa9b5dddc7901e02ffb923"
+
+auth:
+  username: news_explorer
+  database: news_explorer
+  # auth.password / auth.postgresPassword left unset - the chart generates random passwords
+  # into its own Secret (same pattern as argocd-initial-admin-secret / grafana admin-password),
+  # never committed here.
+
+architecture: standalone
+
+primary:
+  persistence:
+    size: 5Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
