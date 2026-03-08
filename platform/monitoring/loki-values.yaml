@@ -42,5 +42,15 @@ gateway:
     limits:
       memory: 64Mi
 
+# Chart defaults (chunksCache: 8192MB, resultsCache: 1024MB allocatedMemory) size these for a
+# real production cluster - chunksCache alone would request ~9.8GB (allocatedMemory * 1.2),
+# more than this whole droplet has, and the pod sits Pending forever. Near-zero traffic here, so
+# tiny caches are plenty.
+chunksCache:
+  allocatedMemory: 256
+
+resultsCache:
+  allocatedMemory: 128
+
 test:
   enabled: false
