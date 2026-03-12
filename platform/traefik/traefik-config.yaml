@@ -1,0 +1,18 @@
+# k3s installs Traefik itself via its own HelmChartConfig mechanism (not through Argo CD like
+# everything else here) - this object merges extra values into that bundled release. Global
+# HTTP->HTTPS redirect at the entrypoint level, so it applies to every Ingress (goskills.xyz,
+# argocd.goskills.xyz, grafana.goskills.xyz, and any future domain) without per-Ingress config.
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    ports:
+      web:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
