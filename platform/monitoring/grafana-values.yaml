@@ -1,3 +1,14 @@
+admin:
+  # The chart's own random-password generation relies on Helm `lookup` to reuse an existing
+  # secret's value across upgrades - Argo CD renders via `helm template` without live cluster
+  # access, so `lookup` always comes back empty and a *new* random password got minted on every
+  # sync, while Grafana's actual DB (persisted on the PVC) kept the very first one. Result: the
+  # Secret and the real working password silently diverged. Fixed by pointing at a Secret we
+  # manage ourselves (created once, out of band - not in git):
+  #   kubectl create secret generic grafana-admin-credentials -n monitoring \
+  #     --from-literal=admin-user=admin --from-literal=admin-password='<password>'
+  existingSecret: grafana-admin-credentials
+
 ingress:
   enabled: true
   hosts:
