@@ -1,3 +1,13 @@
+# The chart's values.yaml documents "Monolithic" as the current name for this mode
+# ("SingleBinary" listed as deprecated) - but templates/_helpers.tpl's
+# loki.deployment.isSingleBinary only ever checks for the literal old string "SingleBinary". With
+# "Monolithic" (the chart's own claimed default) that condition is always false, so the actual
+# Loki server (the single-binary StatefulSet) never rendered at all - gateway/caches came up fine
+# and looked healthy, but there was nothing behind the gateway, hence the 502s. Real chart bug
+# (docs renamed ahead of code, not us doing something wrong) - use the string that's actually
+# wired up.
+deploymentMode: SingleBinary
+
 loki:
   auth_enabled: false
   storage:
