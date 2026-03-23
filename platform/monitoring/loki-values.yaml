@@ -12,6 +12,11 @@ loki:
   auth_enabled: false
   storage:
     type: filesystem
+  # Chart default is 3 (assumes a real multi-node HA cluster) - with a single instance the ring
+  # permanently sees itself as short on healthy replicas ("too many unhealthy instances in the
+  # ring", every query 500s) since it wants 3 members for quorum and only ever finds 1.
+  commonConfig:
+    replication_factor: 1
   schemaConfig:
     configs:
       - from: "2024-01-01"
@@ -51,6 +56,11 @@ gateway:
       memory: 32Mi
     limits:
       memory: 64Mi
+  # Chart default is a hard pod anti-affinity (no two gateway pods on the same node) - on this
+  # single-node cluster that permanently blocks the rolling update's second pod from ever
+  # scheduling (stuck Pending forever, Application shows Degraded). Only one node exists, so the
+  # anti-affinity buys nothing anyway.
+  affinity: {}
 
 # Chart defaults (chunksCache: 8192MB, resultsCache: 1024MB allocatedMemory) size these for a
 # real production cluster - chunksCache alone would request ~9.8GB (allocatedMemory * 1.2),
