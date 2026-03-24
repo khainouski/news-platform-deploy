@@ -60,7 +60,10 @@ gateway:
   # single-node cluster that permanently blocks the rolling update's second pod from ever
   # scheduling (stuck Pending forever, Application shows Degraded). Only one node exists, so the
   # anti-affinity buys nothing anyway.
-  affinity: {}
+  # `{}` does NOT clear this - Helm deep-merges values onto chart defaults, so an empty map
+  # override leaves the non-empty default map untouched. `null` is what actually unsets a
+  # default map/list key during merge.
+  affinity: null
 
 # Chart defaults (chunksCache: 8192MB, resultsCache: 1024MB allocatedMemory) size these for a
 # real production cluster - chunksCache alone would request ~9.8GB (allocatedMemory * 1.2),
