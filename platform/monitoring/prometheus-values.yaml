@@ -1,4 +1,12 @@
 server:
+  # Chart default is 1m - with dashboard queries using rate(x[1m]) (a 1:1 match between scrape
+  # interval and rate window), Prometheus only reliably has 2+ samples in that window on a lucky
+  # alignment, so most rate() panels showed "No data" even with real, continuous traffic. 15s
+  # gives rate([1m]) a comfortable 4 samples per window - the usual rule of thumb is window >=
+  # 4x scrape_interval.
+  global:
+    scrape_interval: 15s
+    evaluation_interval: 15s
   extraArgs:
     web.enable-remote-write-receiver: null
     enable-feature: exemplar-storage

@@ -181,7 +181,7 @@ data:
           "targets": [
             {
               "editorMode": "code",
-              "expr": "go_goroutines{job!=\"pushgateway\"}",
+              "expr": "go_goroutines{app_kubernetes_io_name=\"news-explorer\"}",
               "legendFormat": "",
               "range": true,
               "refId": "A"

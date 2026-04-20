@@ -51,7 +51,11 @@ datasources:
         type: prometheus
         uid: prometheus
         access: proxy
-        url: http://prometheus-server.monitoring.svc.cluster.local:9090
+        # Service's own port is 80 (-> targetPort 9090 on the pod) - not 9090 itself. Wrong port
+        # here doesn't error, it just hangs: connecting to a port a Service doesn't expose has no
+        # iptables/ipvs rule to hit anything, so the TCP SYN goes nowhere and every query times
+        # out after Grafana's 10s client timeout ("i/o timeout", not "connection refused").
+        url: http://prometheus-server.monitoring.svc.cluster.local:80
         isDefault: true
 
       - name: Loki
