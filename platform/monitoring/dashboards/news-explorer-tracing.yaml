@@ -12,7 +12,10 @@ data:
         "list": [
           {
             "builtIn": 1,
-            "datasource": { "type": "datasource", "uid": "grafana" },
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
             "enable": true,
             "hide": true,
             "iconColor": "rgba(0, 211, 255, 1)",
@@ -30,17 +33,27 @@ data:
       "panels": [
         {
           "collapsed": false,
-          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
           "id": 1,
           "panels": [],
           "title": "OpenTelemetry (Tempo)",
           "type": "row"
         },
         {
-          "datasource": { "type": "tempo", "uid": "tempo" },
+          "datasource": {
+            "type": "tempo",
+            "uid": "tempo"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "mode": "palette-classic" },
+              "color": {
+                "mode": "palette-classic"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -52,43 +65,79 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
-                "lineStyle": { "fill": "solid" },
+                "lineStyle": {
+                  "fill": "solid"
+                },
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 1 },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 1
+          },
           "id": 2,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "tempo", "uid": "tempo" },
+              "datasource": {
+                "type": "tempo",
+                "uid": "tempo"
+              },
               "limit": 20,
               "metricsQueryType": "range",
-              "query": "{resource.service.name=\"user-service\" && span.http.request.method =~ \"GET|POST|PUT|DELETE\"} | rate() by (span.http.request.method)",
+              "query": "{resource.service.name=\"news-explorer\" && span.http.request.method =~ \"GET|POST|PUT|DELETE\"} | rate() by (span.http.request.method)",
               "queryType": "traceql",
               "refId": "A",
               "serviceMapUseNativeHistograms": false,
@@ -99,10 +148,15 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "tempo", "uid": "tempo" },
+          "datasource": {
+            "type": "tempo",
+            "uid": "tempo"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "mode": "palette-classic" },
+              "color": {
+                "mode": "palette-classic"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -114,42 +168,76 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 1 },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 1
+          },
           "id": 3,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "tempo", "uid": "tempo" },
+              "datasource": {
+                "type": "tempo",
+                "uid": "tempo"
+              },
               "limit": 50,
               "metricsQueryType": "range",
-              "query": "{resource.service.name=\"user-service\" && span.http.request.method = \"$http_method\" && span.http.response.status_code = $status_code} | rate() by (span.http.request.method, span.http.response.status_code)",
+              "query": "{resource.service.name=\"news-explorer\" && span.http.request.method = \"$http_method\" && span.http.response.status_code = $status_code} | rate() by (span.http.request.method, span.http.response.status_code)",
               "queryType": "traceql",
               "refId": "A",
               "serviceMapUseNativeHistograms": false,
@@ -160,10 +248,15 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "tempo", "uid": "tempo" },
+          "datasource": {
+            "type": "tempo",
+            "uid": "tempo"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "mode": "palette-classic" },
+              "color": {
+                "mode": "palette-classic"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -175,40 +268,74 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               },
               "unit": "s"
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 9 },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 9
+          },
           "id": 4,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "tempo", "uid": "tempo" },
+              "datasource": {
+                "type": "tempo",
+                "uid": "tempo"
+              },
               "limit": 20,
               "metricsQueryType": "range",
               "query": "{span.http.response.status_code=$status_code && span.http.request.method=\"$http_method\"} | quantile_over_time(duration, .999, .99, .95)",
@@ -221,10 +348,16 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "tempo", "uid": "tempo" },
+          "datasource": {
+            "type": "tempo",
+            "uid": "tempo"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "fixedColor": "red", "mode": "fixed" },
+              "color": {
+                "fixedColor": "red",
+                "mode": "fixed"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -236,40 +369,76 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
-                "lineStyle": { "fill": "solid" },
+                "lineStyle": {
+                  "fill": "solid"
+                },
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 9 },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 9
+          },
           "id": 5,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "tempo", "uid": "tempo" },
+              "datasource": {
+                "type": "tempo",
+                "uid": "tempo"
+              },
               "limit": 20,
               "metricsQueryType": "range",
               "query": "{span.http.response.status_code>=400} | rate()",
@@ -283,17 +452,27 @@ data:
         },
         {
           "collapsed": false,
-          "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 },
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
           "id": 10,
           "panels": [],
           "title": "Logs (Loki)",
           "type": "row"
         },
         {
-          "datasource": { "type": "loki", "uid": "loki" },
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "mode": "palette-classic" },
+              "color": {
+                "mode": "palette-classic"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -305,43 +484,79 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
-                "lineStyle": { "fill": "solid" },
+                "lineStyle": {
+                  "fill": "solid"
+                },
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 8, "x": 0, "y": 18 },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 18
+          },
           "id": 11,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "loki", "uid": "loki" },
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
               "direction": "backward",
               "editorMode": "code",
-              "expr": "sum(rate({app=\"user-service\"} | json | method!=\"\" [1m])) by (method)",
+              "expr": "sum(rate({container=\"news-explorer\"} | json | method!=\"\" [1m])) by (method)",
               "queryType": "range",
               "refId": "A"
             }
@@ -350,10 +565,15 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "loki", "uid": "loki" },
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "mode": "palette-classic" },
+              "color": {
+                "mode": "palette-classic"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -365,42 +585,76 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               }
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 8, "x": 8, "y": 18 },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 18
+          },
           "id": 12,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "loki", "uid": "loki" },
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
               "direction": "backward",
               "editorMode": "code",
-              "expr": "sum(rate({app=\"user-service\"} | json | code = $status_code | method = \"$http_method\" [1m])) by (method, code)",
+              "expr": "sum(rate({container=\"news-explorer\"} | json | code = $status_code | method = \"$http_method\" [1m])) by (method, code)",
               "legendFormat": "{{method}} {{code}}",
               "queryType": "range",
               "refId": "A"
@@ -410,10 +664,16 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "loki", "uid": "loki" },
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
           "fieldConfig": {
             "defaults": {
-              "color": { "fixedColor": "red", "mode": "fixed" },
+              "color": {
+                "fixedColor": "red",
+                "mode": "fixed"
+              },
               "custom": {
                 "axisBorderShow": false,
                 "axisCenteredZero": false,
@@ -425,44 +685,80 @@ data:
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
-                "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
                 "insertNulls": false,
                 "lineInterpolation": "linear",
-                "lineStyle": { "fill": "solid" },
+                "lineStyle": {
+                  "fill": "solid"
+                },
                 "lineWidth": 1,
                 "pointSize": 5,
-                "scaleDistribution": { "type": "linear" },
+                "scaleDistribution": {
+                  "type": "linear"
+                },
                 "showPoints": "auto",
                 "showValues": false,
                 "spanNulls": false,
-                "stacking": { "group": "A", "mode": "none" },
-                "thresholdsStyle": { "mode": "off" }
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "red", "value": 80 }
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
                 ]
               },
               "unit": "percent"
             },
             "overrides": []
           },
-          "gridPos": { "h": 8, "w": 8, "x": 16, "y": 18 },
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 18
+          },
           "id": 13,
           "options": {
-            "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
-            "tooltip": { "hideZeros": false, "mode": "single", "sort": "none" }
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "pluginVersion": "12.3.2",
           "targets": [
             {
-              "datasource": { "type": "loki", "uid": "loki" },
+              "datasource": {
+                "type": "loki",
+                "uid": "loki"
+              },
               "direction": "backward",
               "editorMode": "code",
-              "expr": "(sum(rate({app=\"user-service\"} | json | code != \"200\" [1m])) / sum(rate({app=\"user-service\"}[1m]))) * 100",
+              "expr": "(sum(rate({container=\"news-explorer\"} | json | code != \"200\" [1m])) / sum(rate({container=\"news-explorer\"}[1m]))) * 100",
               "queryType": "range",
               "refId": "A"
             }
@@ -474,37 +770,85 @@ data:
       "preload": false,
       "refresh": "30s",
       "schemaVersion": 42,
-      "tags": ["tracing", "logs"],
+      "tags": [
+        "tracing",
+        "logs"
+      ],
       "templating": {
         "list": [
           {
-            "current": { "text": "GET", "value": "GET" },
+            "current": {
+              "text": "GET",
+              "value": "GET"
+            },
             "name": "http_method",
             "options": [
-              { "selected": true, "text": "GET", "value": "GET" },
-              { "selected": false, "text": "POST", "value": "POST" },
-              { "selected": false, "text": "PUT", "value": "PUT" },
-              { "selected": false, "text": "DELETE", "value": "DELETE" }
+              {
+                "selected": true,
+                "text": "GET",
+                "value": "GET"
+              },
+              {
+                "selected": false,
+                "text": "POST",
+                "value": "POST"
+              },
+              {
+                "selected": false,
+                "text": "PUT",
+                "value": "PUT"
+              },
+              {
+                "selected": false,
+                "text": "DELETE",
+                "value": "DELETE"
+              }
             ],
             "query": "GET, POST, PUT, DELETE",
             "type": "custom"
           },
           {
-            "current": { "text": "200", "value": "200" },
+            "current": {
+              "text": "200",
+              "value": "200"
+            },
             "name": "status_code",
             "options": [
-              { "selected": true, "text": "200", "value": "200" },
-              { "selected": false, "text": "201", "value": "201" },
-              { "selected": false, "text": "400", "value": "400" },
-              { "selected": false, "text": "404", "value": "404" },
-              { "selected": false, "text": "500", "value": "500" }
+              {
+                "selected": true,
+                "text": "200",
+                "value": "200"
+              },
+              {
+                "selected": false,
+                "text": "201",
+                "value": "201"
+              },
+              {
+                "selected": false,
+                "text": "400",
+                "value": "400"
+              },
+              {
+                "selected": false,
+                "text": "404",
+                "value": "404"
+              },
+              {
+                "selected": false,
+                "text": "500",
+                "value": "500"
+              }
             ],
             "query": "200, 201, 400, 404, 500",
             "type": "custom"
           }
         ]
       },
-      "time": { "from": "now-15m", "to": "now" },
+      "time": {
+        "from": "now-15m",
+        "to": "now"
+      },
       "timepicker": {},
       "timezone": "",
       "title": "Distributed Tracing & Logs",
