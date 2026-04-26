@@ -7,7 +7,9 @@ tempo:
       memory: 256Mi
   metricsGenerator:
     enabled: true
-    remoteWriteUrl: "http://prometheus-server.monitoring.svc.cluster.local:9090/api/v1/write"
+    # Service's own port is 80 (-> targetPort 9090 on the pod), same off-by-port bug found
+    # earlier on the Grafana datasource: hitting 9090 on the Service itself times out silently.
+    remoteWriteUrl: "http://prometheus-server.monitoring.svc.cluster.local:80/api/v1/write"
     processor:
       local_blocks:
         filter_server_spans: false
