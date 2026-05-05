@@ -1,10 +1,13 @@
 tempo:
   resources:
+    # 256Mi limit OOMKilled the pod (exit 137) seconds after startup, right when flushing a WAL
+    # block to parquet - a memory-heavy step, made worse once metrics-generator (span-metrics/
+    # local-blocks) was enabled. Node has plenty of headroom (~4Gi free), so give it real room.
     requests:
       cpu: 50m
-      memory: 128Mi
-    limits:
       memory: 256Mi
+    limits:
+      memory: 1Gi
   metricsGenerator:
     enabled: true
     # Service's own port is 80 (-> targetPort 9090 on the pod), same off-by-port bug found
