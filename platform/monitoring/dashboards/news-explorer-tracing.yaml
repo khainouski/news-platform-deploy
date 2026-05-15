@@ -654,7 +654,7 @@ data:
               },
               "direction": "backward",
               "editorMode": "code",
-              "expr": "sum(rate({container=\"news-explorer\"} | json | code = $status_code | method = \"$http_method\" [1m])) by (method, code)",
+              "expr": "sum(rate({container=\"news-explorer\"} | json | __error__=\"\" | code = $status_code | method =~ \"^$http_method\" [1m])) by (method, code)",
               "legendFormat": "{{method}} {{code}}",
               "queryType": "range",
               "refId": "A"
@@ -758,7 +758,7 @@ data:
               },
               "direction": "backward",
               "editorMode": "code",
-              "expr": "(sum(rate({container=\"news-explorer\"} | json | code != \"200\" [1m])) / sum(rate({container=\"news-explorer\"}[1m]))) * 100",
+              "expr": "(sum(rate({container=\"news-explorer\"} | json | __error__=\"\" | code != \"200\" [1m])) / sum(rate({container=\"news-explorer\"}[1m]))) * 100",
               "queryType": "range",
               "refId": "A"
             }
