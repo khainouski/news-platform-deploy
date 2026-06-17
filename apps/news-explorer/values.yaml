@@ -25,6 +25,20 @@ otel:
   # (app falls back to a no-op tracer) - harmless if Tempo isn't deployed yet, safe to leave on.
   endpoint: "tempo.monitoring.svc.cluster.local:4317"
 
+postgres:
+  # Same DB as platform/postgresql/postgresql-values.yaml (auth.username/database). Service is in
+  # the "database" namespace; Secrets can't be referenced cross-namespace, so the password lives
+  # in a Secret created by hand in *this* release's namespace (same pattern as Grafana's
+  # grafana-admin-credentials - see platform/monitoring/grafana-values.yaml):
+  #   kubectl create secret generic news-explorer-postgres-credentials -n apps \
+  #     --from-literal=password='<same password as the "password" key in secret/postgresql -n database>'
+  host: postgresql.database.svc.cluster.local
+  port: "5432"
+  dbName: news_explorer
+  user: news_explorer
+  existingSecret: news-explorer-postgres-credentials
+  secretPasswordKey: password
+
 service:
   port: 8080
 
