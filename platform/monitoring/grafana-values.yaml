@@ -35,9 +35,11 @@ persistence:
 resources:
   requests:
     cpu: 50m
-    memory: 128Mi
+    memory: 192Mi
   limits:
-    memory: 256Mi
+    # 256Mi OOMKilled Grafana 13.1.2 under normal use (bleve search indexing, k8s-based
+    # provisioning, zanzana authz all add up) - actual usage was already ~286Mi at idle.
+    memory: 512Mi
 
 sidecar:
   dashboards:
