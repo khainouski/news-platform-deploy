@@ -38,4 +38,4 @@ alloy:
       cpu: 50m
       memory: 64Mi
     limits:
-      memory: 128Mi
+      memory: 384Mi # was 128Mi - sized so live usage (~90Mi) stays under 25% of the limit

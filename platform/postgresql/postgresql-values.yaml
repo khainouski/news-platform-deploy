@@ -23,4 +23,5 @@ primary:
       cpu: 100m
       memory: 128Mi
     limits:
-      memory: 256Mi
+      memory: 512Mi # was 256Mi - live usage was only ~36Mi, but Postgres spikes under
+      # migrations/vacuum/connection bursts, so the low idle number understates real headroom needed

@@ -34,7 +34,7 @@ singleBinary:
       cpu: 100m
       memory: 256Mi
     limits:
-      memory: 512Mi
+      memory: 768Mi # was 512Mi, live usage ~33% of that - room to grow with more log volume
   persistence:
     size: 10Gi
 
@@ -55,7 +55,7 @@ gateway:
       cpu: 25m
       memory: 32Mi
     limits:
-      memory: 64Mi
+      memory: 128Mi # was 64Mi, cheap margin
   # Chart default is a hard pod anti-affinity (no two gateway pods on the same node) - on this
   # single-node cluster that permanently blocks the rolling update's second pod from ever
   # scheduling (stuck Pending forever, Application shows Degraded). Only one node exists, so the

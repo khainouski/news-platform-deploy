@@ -38,8 +38,9 @@ resources:
     memory: 192Mi
   limits:
     # 256Mi OOMKilled Grafana 13.1.2 under normal use (bleve search indexing, k8s-based
-    # provisioning, zanzana authz all add up) - actual usage was already ~286Mi at idle.
-    memory: 512Mi
+    # provisioning, zanzana authz all add up) - actual usage was already ~286Mi at idle. Sized so
+    # live usage (~346Mi) stays under 25% of the limit, not just past the last OOM.
+    memory: 1536Mi
 
 sidecar:
   dashboards:

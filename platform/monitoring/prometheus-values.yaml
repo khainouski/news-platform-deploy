@@ -18,7 +18,10 @@ server:
       cpu: 100m
       memory: 256Mi
     limits:
-      memory: 512Mi
+      # 512Mi was already at ~60% live with retention: 15d - series count only grows over time,
+      # same class of problem as Grafana's OOMKill earlier. Sized so live usage (~290Mi) stays
+      # under 25% of the limit.
+      memory: 1280Mi
 
 alertmanager:
   enabled: false
