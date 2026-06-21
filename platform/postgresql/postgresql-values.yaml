@@ -9,9 +9,18 @@ image:
 auth:
   username: news_explorer
   database: news_explorer
-  # auth.password / auth.postgresPassword left unset - the chart generates random passwords
-  # into its own Secret (same pattern as argocd-initial-admin-secret / grafana admin-password),
-  # never committed here.
+  # auth.password/auth.postgresPassword left unset on purpose - but letting the chart generate its
+  # own random Secret (the old comment here, wrongly assuming it was the same safe pattern as
+  # argocd-initial-admin-secret) actively broke this: Argo CD renders via `helm template` without
+  # live cluster access, so its `lookup`-based "keep the existing password" guard always sees
+  # nothing and mints a *new* random password into the Secret on every sync/selfHeal - while
+  # Postgres itself only sets the password once, at initdb, off whatever was mounted at that
+  # moment. Secret and real DB password silently diverge (hit this for real - a resync overwrote
+  # it under an hour after cluster creation, before anything had even used it). existingSecret
+  # points at a Secret cloud-init creates once at first boot, before Argo CD ever syncs this chart
+  # - same fix as Grafana's admin.existingSecret. Key names match the chart's own defaults
+  # (auth.secretKeys.adminPasswordKey/userPasswordKey), so no override needed there.
+  existingSecret: postgresql-credentials
 
 architecture: standalone
 
