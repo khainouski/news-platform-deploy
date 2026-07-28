@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "news-explorer.fullname" . }}-migrate
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "news-explorer.labels" . | nindent 4 }}
+  annotations:
+    # Runs once before each sync, ahead of the Deployment update - the app image being rolled
+    # out can assume the schema it needs already exists. BeforeHookCreation deletes the previous
+    # run's (completed) Job first, since a Job's pod template is immutable - without this, the
+    # next sync would fail trying to update a Job that already exists.
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        {{- include "news-explorer.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c"]
+          args:
+            - |
+              set -eu
+              # openssl-generated passwords only ever use base64's alphabet (A-Za-z0-9+/=) - the
+              # three non-alphanumeric characters are the only ones that can break a literal URL,
+              # so encode just those rather than a full generic URL-encoder.
+              enc_pw=$(printf '%s' "$POSTGRES_PASSWORD" | sed -e 's/+/%2B/g' -e 's,/,%2F,g' -e 's/=/%3D/g')
+              migrate -path ./migration/postgres -database "postgres://$POSTGRES_USER:${enc_pw}@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB_NAME?sslmode=disable" up
+          env:
+            {{- include "news-explorer.postgresEnv" . | nindent 12 }}
