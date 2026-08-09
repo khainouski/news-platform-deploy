@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "news-explorer.fullname" . }}-sync
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "news-explorer.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.sync.schedule | quote }}
+  # Forbid, not Allow: if a run is still going (slow feeds, transient DB slowness) the next tick
+  # skips instead of piling up concurrent runs. Not required for correctness - article dedup is
+  # DB-enforced (UNIQUE(source_id, external_id), ON CONFLICT DO NOTHING) - just avoids redundant
+  # work.
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        metadata:
+          labels:
+            {{- include "news-explorer.selectorLabels" . | nindent 12 }}
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: sync
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["./syncjob"]
+              env:
+                - name: OTEL_ENDPOINT
+                  value: {{ .Values.otel.endpoint | quote }}
+                {{- include "news-explorer.postgresEnv" . | nindent 16 }}

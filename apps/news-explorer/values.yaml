@@ -20,6 +20,12 @@ resources:
     cpu: 200m
     memory: 256Mi
 
+sync:
+  # Hourly, on the hour. Independent of the in-process fallback scheduler's 30min interval
+  # (internal/background/sync, syncInterval in internal/app/app.go) - that goroutine is removed
+  # once this CronJob is confirmed running, so the two never need to match.
+  schedule: "0 * * * *"
+
 otel:
   # Tempo's OTLP/gRPC receiver (platform/monitoring/tempo-values.yaml). Empty disables tracing
   # (app falls back to a no-op tracer) - harmless if Tempo isn't deployed yet, safe to leave on.
