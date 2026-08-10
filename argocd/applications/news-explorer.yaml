@@ -15,7 +15,7 @@ spec:
     helm:
       values: |
         image:
-          tag: "sha-bc98260"
+          tag: "sha-9497de5"
         ingress:
           host: goskills.xyz
           tls:
