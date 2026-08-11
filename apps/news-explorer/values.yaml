@@ -14,8 +14,9 @@ resources:
   # req/s) - concurrent request goroutines plus OTel's in-memory span buffering don't fit in that
   # little. Node has plenty of headroom (~4Gi free), so give it real room, same fix as Tempo's own
   # OOM earlier (platform/monitoring/tempo-values.yaml).
-  requests: # guaranteed
-    cpu: 200m
+  requests: # guaranteed - node is already at ~94% cpu requests from the rest of the stack,
+            # 100m leaves the 2nd replica schedulable; the 750m limit still gives it real burst room
+    cpu: 100m
     memory: 32Mi
   limits: # ceiling
     cpu: 750m
