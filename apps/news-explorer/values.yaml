@@ -6,7 +6,8 @@ image:
   tag: "latest"
   pullPolicy: IfNotPresent
 
-replicaCount: 1 # single small dev droplet — bump per-environment once that changes
+replicaCount: 2 # 200m/replica measured ~20-25 rps clean before throttling errors - 2x750m
+                # targets ~100 rps with headroom, see news-explorer-client load test results
 
 resources:
   # 32Mi limit OOMKilled the pod under load-test traffic (news-explorer-client at a few hundred
@@ -14,11 +15,11 @@ resources:
   # little. Node has plenty of headroom (~4Gi free), so give it real room, same fix as Tempo's own
   # OOM earlier (platform/monitoring/tempo-values.yaml).
   requests: # guaranteed
-    cpu: 100m
+    cpu: 200m
     memory: 32Mi
   limits: # ceiling
-    cpu: 200m
-    memory: 256Mi
+    cpu: 750m
+    memory: 384Mi
 
 sync:
   # Hourly, on the hour. Independent of the in-process fallback scheduler's 30min interval
